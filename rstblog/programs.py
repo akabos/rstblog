@@ -85,9 +85,9 @@ class RSTProgram(TemplatedProgram):
         with self.context.open_source_file() as f:
             for line in f:
                 line = line.rstrip()
-                if not line:
-                    break
                 headers.append(line)
+                if line == '---':
+                    break
             title = self.parse_text_title(f)
 
         cfg = yaml.load(StringIO('\n'.join(headers)))
