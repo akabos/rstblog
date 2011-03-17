@@ -85,9 +85,9 @@ class RSTProgram(TemplatedProgram):
         with self.context.open_source_file() as f:
             for line in f:
                 line = line.rstrip()
-                headers.append(line)
                 if line == '---':
                     break
+                headers.append(line)
             title = self.parse_text_title(f)
 
         cfg = yaml.load(StringIO('\n'.join(headers)))
@@ -131,7 +131,7 @@ class RSTProgram(TemplatedProgram):
         if self._fragment_cache is not None:
             return self._fragment_cache
         with self.context.open_source_file() as f:
-            while f.readline().strip():
+            while f.readline().strip() != '---':
                 pass
             rv = self.context.render_rst(f.read().decode('utf-8'))
         self._fragment_cache = rv
